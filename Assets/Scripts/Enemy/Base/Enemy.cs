@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -26,6 +27,13 @@ public class Enemy : GameObjectRecordedInManageSystem,ICellOccupier
     [NonSerialized] public bool isAlive = true;
     [NonSerialized] public SourceType sourceType = SourceType.None;
     [NonSerialized] public EnemyType type = EnemyType.None;
+
+    void Awake()
+    {
+        // 登场小动画
+        transform.localScale = Vector3.zero;
+        transform.DOScale(1, 0.8f).SetEase(Ease.OutBack);
+    }
 
     protected void Start()
     {

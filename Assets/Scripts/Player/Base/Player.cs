@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
 
@@ -12,7 +13,7 @@ public enum PlayerType
 }
 
 [RequireComponent(typeof(BoxCollider2D))]
-public class Player : GameObjectRecordedInManageSystem, ICellOccupier
+public abstract class Player : GameObjectRecordedInManageSystem, ICellOccupier
 {
     public CellController Cell { get; set; }
     [NonSerialized] public bool isAlive = true;
@@ -25,25 +26,23 @@ public class Player : GameObjectRecordedInManageSystem, ICellOccupier
     {
         AddToManageSystem();
     }
-    private void Update()
-    {
-        if (!isAlive)
-        {
-            OnDeath();
-        }
-    }
 
-    protected virtual void OnDeath()
+    private void OnDestroy()
     {
         DeleteFromManageSystem();
+    }
+
+    protected void DetachCell()
+    {
         Cell.attachedPlayer = null;
         if (attachedAcceptor != null)
         {
             attachedAcceptor.DetachObject(gameObject);
             attachedAcceptor = null;
         }
-        Destroy(gameObject);
     }
+
+    public abstract UniTask Action(Enemy enemy);
 
     public void MoveToCell(CellController targetCell,float time)
     {
@@ -57,9 +56,11 @@ public class Player : GameObjectRecordedInManageSystem, ICellOccupier
         }
         MoveTo(targetCell.transform.position,time);
     }
-    public void MoveTo(Vector3 target,float time)
+    public async void MoveTo(Vector3 target,float time)
     {
-        transform.DOMove(target, time);
+        animator.SetBool("isWalking", true);
+        await transform.DOMove(target, time).SetEase(Ease.OutQuad).AsyncWaitForCompletion();
+        animator.SetBool("isWalking", false);
     }
 
     public override void AddToManageSystem()
