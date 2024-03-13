@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -30,7 +31,7 @@ public class ChessboardController : MonoBehaviour
     private List<List<CellController>> cells;
     private float cellX;
     private float cellY;
-    [NonSerialized] public List<bool> colPolluted;
+    [ReadOnly] public List<bool> colPolluted;
 
     private void Start()
     {
@@ -39,7 +40,7 @@ public class ChessboardController : MonoBehaviour
         //int numberOfCellsToPollute = 3; 
         //cellController.SpreadPollution(numberOfCellsToPollute);
         colPolluted = new List<bool>(chessboardX);
-        for(int i=0;i<=chessboardX;i++)
+        for(int i=1;i<=chessboardX;i++)
         {
             colPolluted.Add(false);
         }
@@ -53,7 +54,7 @@ public class ChessboardController : MonoBehaviour
             cells.Add(new List<CellController>());
             for (int j = 0; j < chessboardX; j++)
             {
-                if (chessboardX == 5)
+                if (chessboardY == 5)
                 {
                     if (i == 0 && j == 0 || i == chessboardY - 1 && j == 0)
                     {

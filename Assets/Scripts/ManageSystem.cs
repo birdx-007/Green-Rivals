@@ -20,6 +20,7 @@ public class ManageSystem : MonoBehaviour
     public UnityEvent OnGameLose;
     public int leftEnemies = 0;
     public ChessboardController chessboard;
+    public SoundSystem soundSystem;
 
     private void Awake()
     {
@@ -47,7 +48,7 @@ public class ManageSystem : MonoBehaviour
     public Dictionary<int, Enemy> enemies;
 
     // UI
-    public Button nextRoundButton;
+    public CanvasGroup mainCanvasGroup;
 
     private void Start()
     {
@@ -94,7 +95,7 @@ public class ManageSystem : MonoBehaviour
         {
             StartRound();
         }
-        nextRoundButton.interactable = !isProcessing;
+        mainCanvasGroup.interactable = !isProcessing;
     }
 
     private bool isWinning()
@@ -109,7 +110,7 @@ public class ManageSystem : MonoBehaviour
 
     private bool isLosing()
     {
-        if(hasGenerate && energy==0 && enemies.Count>0 && players.Count==0)
+        if (hasGenerate && (energy == 0 && enemies.Count > 0 && players.Count == 0 || chessboard.colPolluted[0]))
         {
             return true;
         }
@@ -121,6 +122,7 @@ public class ManageSystem : MonoBehaviour
     /// </summary>
     public async void StartRound()
     {
+        soundSystem.InitiateOnRoundStart();
         isProcessing = true;
         steps++;
         #region MoveAllPlayersForward
@@ -180,6 +182,7 @@ public class ManageSystem : MonoBehaviour
                 }
             }
         }
+        soundSystem.PlayPlayerSound();
         float interactTime = 0f;
         if (interactTimes.Count > 0)
         {
@@ -197,6 +200,7 @@ public class ManageSystem : MonoBehaviour
             }
         }
         chessboard.UpdateChessboard();
+        await UniTask.Delay(TimeSpan.FromSeconds(0.8f));
         #endregion
         isProcessing = false;
         if (isWinning())

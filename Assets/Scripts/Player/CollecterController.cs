@@ -20,6 +20,7 @@ public class CollecterController : Player
         if (enemy.type == EnemyType.Recyclable)
         {
             ManageSystem.instance.interactTimes.Add((float)getAnimationLength/1000 + 2.4f);
+            SoundSystem.shouldPlayCollectSound = true;
             animator.SetTrigger("get");
             await UniTask.Delay(getAnimationLength);
             enemy.isAlive = false;
@@ -32,6 +33,7 @@ public class CollecterController : Player
         else if (enemy.type == EnemyType.Harmless)
         {
             ManageSystem.instance.interactTimes.Add((float)getAnimationLength/1000 + 2.4f);
+            SoundSystem.shouldPlayCollectSound = true;
             animator.SetTrigger("get");
             await UniTask.Delay(getAnimationLength);
             enemy.isAlive = false;

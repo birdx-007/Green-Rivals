@@ -18,6 +18,7 @@ public class CleanerController : Player
         if (enemy.type == EnemyType.Pollution || enemy.type == EnemyType.Radiation)
         {
             ManageSystem.instance.interactTimes.Add((float)sprayAnimationLength/1000 + 0.8f);
+            SoundSystem.shouldPlaySpraySound = true;
             animator.SetTrigger("spray");
             await UniTask.Delay(sprayAnimationLength);
             enemy.isAlive = false;
