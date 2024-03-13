@@ -25,7 +25,7 @@ public class ChessboardController : MonoBehaviour
     }
     public int chessboardX = 8;
     public int chessboardY = 5;
-    public int pollutedStartCol = 4;
+    //public int pollutedStartCol = 4;
     public GameObject cellPrefab;
     private List<List<CellController>> cells;
     private float cellX;
@@ -38,10 +38,10 @@ public class ChessboardController : MonoBehaviour
         //CellController cellController = GetCell(3, 7);
         //int numberOfCellsToPollute = 3; 
         //cellController.SpreadPollution(numberOfCellsToPollute);
-        colPolluted = new List<bool>();
-        for (int i = pollutedStartCol; i <= chessboardX; i++)
+        colPolluted = new List<bool>(chessboardX);
+        for(int i=0;i<=chessboardX;i++)
         {
-            colPolluted.Add(true);
+            colPolluted.Add(false);
         }
     }
 
@@ -106,7 +106,7 @@ public class ChessboardController : MonoBehaviour
 
     public void UpdateChessboard()
     {
-        for (int i = pollutedStartCol; i <= chessboardX; i++)
+        for (int i = 1; i <= chessboardX; i++)
         {
             bool isColPolluted = false;
             for (int j = 1; j <= chessboardY; j++)
@@ -120,17 +120,17 @@ public class ChessboardController : MonoBehaviour
                     }
                 }
             }
-            colPolluted[i - pollutedStartCol] = isColPolluted;
+            colPolluted[i - 1] = isColPolluted;
         }
 
-        for (int i = pollutedStartCol; i <= chessboardX; i++)
+        for (int i = 1; i <= chessboardX; i++)
         {
             for (int j = 1; j <= chessboardY; j++)
             {
                 CellController cell = GetCell(j, i);
                 if (cell != null)
                 {
-                    cell.SetState(colPolluted[i - pollutedStartCol]);
+                    cell.SetState(colPolluted[i - 1]);
                 }
             }
         }

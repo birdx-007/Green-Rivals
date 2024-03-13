@@ -26,19 +26,15 @@ public class CellController : MonoBehaviour
 
     private void Awake()
     {
-        attachedEnemy = null;
-        attachedPlayer = null;
-    }
-
-    private void Start()
-    {
         draggableAcceptor = GetComponent<DraggableAcceptor>();
         chessboardX = GetComponentInParent<ChessboardController>().chessboardX;
         chessboardY = GetComponentInParent<ChessboardController>().chessboardY;
         //Debug.Log("SIZE: " + chessboardSize);
         spriteRenderer = GetComponent<SpriteRenderer>();
-        SetState(col >= ChessboardController.instance.pollutedStartCol);
+        //SetState(col >= ChessboardController.instance.pollutedStartCol);
         draggableAcceptor.canAccept = isUsingGreenSprite;
+        attachedEnemy = null;
+        attachedPlayer = null;
     }
 
     private void Update()
@@ -98,22 +94,22 @@ public class CellController : MonoBehaviour
                 rightCell = rightCell.GetNeighbor(Direction.Right);
             }
             // pollute neighbor
-            if (topCell != null && topCell.col>=ChessboardController.instance.pollutedStartCol)
+            if (topCell != null)
             {
                 EnemyGenerater.instance.GenerateEnemy(EnemyType.Pollution,0,topCell.row,topCell.col);
             }
 
-            if (bottomCell != null && bottomCell.col>=ChessboardController.instance.pollutedStartCol)
+            if (bottomCell != null)
             {
                 EnemyGenerater.instance.GenerateEnemy(EnemyType.Pollution,0,bottomCell.row,bottomCell.col);
             }
 
-            if (leftCell != null && leftCell.col>=ChessboardController.instance.pollutedStartCol)
+            if (leftCell != null)
             {
                 EnemyGenerater.instance.GenerateEnemy(EnemyType.Pollution, 0, leftCell.row,leftCell.col);
             }
 
-            if (rightCell != null && rightCell.col>=ChessboardController.instance.pollutedStartCol)
+            if (rightCell != null)
             {
                 EnemyGenerater.instance.GenerateEnemy(EnemyType.Pollution,0,rightCell.row,rightCell.col);
             }

@@ -72,12 +72,23 @@ public class ManageSystem : MonoBehaviour
         enemies.Clear();
     }
 
-    private void Update()
+    private async void Update()
     {
         if (!hasGenerate)
         {
             EnemyGenerater.instance.GenerateEnemy(EnemyType.Recyclable, 0, 1, 4);
+            EnemyGenerater.instance.GenerateEnemy(EnemyType.Recyclable, 1, 4, 5);
+            EnemyGenerater.instance.GenerateEnemy(EnemyType.Recyclable, 2, 5, 6);
+            EnemyGenerater.instance.GenerateEnemy(EnemyType.Recyclable, 0, 2, 8);
+            EnemyGenerater.instance.GenerateEnemy(EnemyType.Harmless, 1, 2, 5);
+            EnemyGenerater.instance.GenerateEnemy(EnemyType.Harmless, 0, 4, 8);
+            EnemyGenerater.instance.GenerateEnemy(EnemyType.Radiation, 0, 3, 4);
+            EnemyGenerater.instance.GenerateEnemy(EnemyType.Radiation, 0, 2, 6);
+            EnemyGenerater.instance.GenerateEnemy(EnemyType.Radiation, 0, 3, 5);
+            EnemyGenerater.instance.GenerateEnemy(EnemyType.Radiation, 0, 3, 6);
             hasGenerate = true;
+            await UniTask.NextFrame();
+            chessboard.UpdateChessboard();
         }
         if (Input.GetKeyDown(KeyCode.Space) && !isProcessing)
         {
