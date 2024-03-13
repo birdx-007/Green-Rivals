@@ -17,7 +17,9 @@ public class ManageSystem : MonoBehaviour
     [NonSerialized]
     public List<float> interactTimes = new(10);
     public UnityEvent OnGameWin;
+    public UnityEvent OnGameLose;
     public int leftEnemies = 0;
+    public ChessboardController chessboard;
 
     private void Awake()
     {
@@ -75,15 +77,6 @@ public class ManageSystem : MonoBehaviour
         if (!hasGenerate)
         {
             EnemyGenerater.instance.GenerateEnemy(EnemyType.Recyclable, 0, 1, 4);
-            EnemyGenerater.instance.GenerateEnemy(EnemyType.Recyclable, 1, 4, 5);
-            EnemyGenerater.instance.GenerateEnemy(EnemyType.Recyclable, 2, 5, 6);
-            EnemyGenerater.instance.GenerateEnemy(EnemyType.Recyclable, 0, 2, 8);
-            EnemyGenerater.instance.GenerateEnemy(EnemyType.Harmless, 1, 2, 5);
-            EnemyGenerater.instance.GenerateEnemy(EnemyType.Harmless, 0, 4, 8);
-            EnemyGenerater.instance.GenerateEnemy(EnemyType.Radiation, 0, 3, 4);
-            EnemyGenerater.instance.GenerateEnemy(EnemyType.Radiation, 0, 2, 6);
-            EnemyGenerater.instance.GenerateEnemy(EnemyType.Radiation, 0, 3, 5);
-            EnemyGenerater.instance.GenerateEnemy(EnemyType.Radiation, 0, 3, 6);
             hasGenerate = true;
         }
         if (Input.GetKeyDown(KeyCode.Space) && !isProcessing)
@@ -100,6 +93,15 @@ public class ManageSystem : MonoBehaviour
             return true;
         }
 
+        return false;
+    }
+
+    private bool isLosing()
+    {
+        if(hasGenerate && energy==0 && enemies.Count>0 && players.Count==0)
+        {
+            return true;
+        }
         return false;
     }
 
@@ -130,7 +132,7 @@ public class ManageSystem : MonoBehaviour
                 {
                     Debug.Log("player out of field.");
                     player.isAlive = false;
-                    Destroy(player.gameObject);
+                    player.OnOutOfField();
                 }
             }
         }
@@ -167,6 +169,13 @@ public class ManageSystem : MonoBehaviour
                 }
             }
         }
+        float interactTime = 0f;
+        if (interactTimes.Count > 0)
+        {
+            interactTime = interactTimes.Max() + 0.2f;
+        }
+        //Debug.Log(interactTime);
+        await UniTask.Delay(TimeSpan.FromSeconds(interactTime));
         // 敌人状态自更新
         foreach (KeyValuePair<int, Enemy> pair in enemies)
         {
@@ -176,18 +185,16 @@ public class ManageSystem : MonoBehaviour
                 enemy.OnStateUpdate();
             }
         }
-        float interactTime = 0f;
-        if (interactTimes.Count > 0)
-        {
-            interactTime = interactTimes.Max() + 0.2f;
-        }
-        //Debug.Log(interactTime);
-        await UniTask.Delay(TimeSpan.FromSeconds(interactTime));
+        chessboard.UpdateChessboard();
         #endregion
         isProcessing = false;
         if (isWinning())
         {
             OnGameWin.Invoke();
+        }
+        else if (isLosing())
+        {
+            OnGameLose.Invoke();
         }
     }
 

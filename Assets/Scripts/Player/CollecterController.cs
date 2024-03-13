@@ -54,7 +54,7 @@ public class CollecterController : Player
     {
         await transform.DOJump(transform.position, 0.5f, 2, 0.8f).AsyncWaitForCompletion();
         await transform.DOScaleX(-1, 0.4f).AsyncWaitForCompletion();
-        GetComponent<SpriteRenderer>().DOColor(Color.clear, 0.6f).SetEase(Ease.InQuad);
+        GetComponent<SpriteRenderer>().DOColor(new Color(1,1,1,0), 0.6f).SetEase(Ease.InQuad);
         await transform.DOMoveX(-10f, 1.2f).SetEase(Ease.InQuad).AsyncWaitForCompletion();
     }
 

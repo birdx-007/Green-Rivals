@@ -53,11 +53,15 @@ public class ChessboardController : MonoBehaviour
             cells.Add(new List<CellController>());
             for (int j = 0; j < chessboardX; j++)
             {
-                if (i == 0 && j == 0 || i == chessboardY - 1 && j == 0)
+                if (chessboardX == 5)
                 {
-                    cells[i].Add(null);
-                    continue;
+                    if (i == 0 && j == 0 || i == chessboardY - 1 && j == 0)
+                    {
+                        cells[i].Add(null);
+                        continue;
+                    }
                 }
+                
                 GameObject obj = Instantiate(cellPrefab, transform);
                 CellController cell = obj.GetComponent<CellController>();
                 cell.row = i + 1;
@@ -100,7 +104,7 @@ public class ChessboardController : MonoBehaviour
         return new Vector3();
     }
 
-    private void Update()
+    public void UpdateChessboard()
     {
         for (int i = pollutedStartCol; i <= chessboardX; i++)
         {
@@ -126,7 +130,7 @@ public class ChessboardController : MonoBehaviour
                 CellController cell = GetCell(j, i);
                 if (cell != null)
                 {
-                    cell.isUsingGreenSprite = !colPolluted[i - pollutedStartCol];
+                    cell.SetState(colPolluted[i - pollutedStartCol]);
                 }
             }
         }
@@ -134,6 +138,7 @@ public class ChessboardController : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        Gizmos.color = Color.black;
         Gizmos.DrawWireCube(transform.position + new Vector3(0.5f * chessboardX * 1.8f, -0.5f * chessboardY * 1.5f, 0),
             new Vector3(chessboardX * 1.8f, chessboardY * 1.5f, 0));
     }

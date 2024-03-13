@@ -25,10 +25,11 @@ public class Enemy : GameObjectRecordedInManageSystem,ICellOccupier
 {
     public CellController Cell { get; set; }
     [NonSerialized] public bool isAlive = true;
+    private bool isDying = false;
     [NonSerialized] public SourceType sourceType = SourceType.None;
     [NonSerialized] public EnemyType type = EnemyType.None;
 
-    void Awake()
+    protected void Awake()
     {
         // 登场小动画
         transform.localScale = Vector3.zero;
@@ -42,17 +43,19 @@ public class Enemy : GameObjectRecordedInManageSystem,ICellOccupier
 
     private void Update()
     {
-        if (!isAlive)
+        if (!isAlive && !isDying)
         {
+            isDying = true;
             OnDeath();
-            ManageSystem.instance.leftEnemies--;
         }
     }
 
-    protected virtual void OnDeath()
+    protected async void OnDeath()
     {
         DeleteFromManageSystem();
         Cell.attachedEnemy = null;
+        await transform.DOScale(0, 0.8f).AsyncWaitForCompletion();
+        ManageSystem.instance.leftEnemies--;
         Destroy(gameObject);
     }
 

@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class RadiationController : Enemy
 {
-    private void Awake()
+    private new void Awake()
     {
+        base.Awake();
         gameObject.name = "Radiation";
         type = EnemyType.Radiation;
         sourceType = SourceType.None;

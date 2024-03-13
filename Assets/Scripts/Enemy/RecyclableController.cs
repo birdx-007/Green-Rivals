@@ -5,8 +5,9 @@ using UnityEngine;
 
 public class RecyclableController : Enemy
 {
-    private void Awake()
+    private new void Awake()
     {
+        base.Awake();
         gameObject.name = "Recyclable";
         type = EnemyType.Recyclable;
         sourceType = SourceType.None;

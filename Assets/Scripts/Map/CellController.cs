@@ -1,8 +1,10 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Random = System.Random;
 
 [RequireComponent(typeof(DraggableAcceptor))]
 public class CellController : MonoBehaviour
@@ -11,15 +13,16 @@ public class CellController : MonoBehaviour
     public float edgeY = 1f;
     public int row; //行
     public int col; //列
-    public bool isUsingGreenSprite = true;
+    private bool isUsingGreenSprite = false;
     public DraggableAcceptor draggableAcceptor;
     public Enemy attachedEnemy;
     public Player attachedPlayer;
     private static int chessboardX;
     private static int chessboardY;
-    public Sprite pollutedSprite;
-    public Sprite greenSprite;
+    //public Sprite pollutedSprite;
+    public List<Sprite> greenSprites;
     private SpriteRenderer spriteRenderer;
+    public SpriteRenderer pollution;
 
     private void Awake()
     {
@@ -34,19 +37,34 @@ public class CellController : MonoBehaviour
         chessboardY = GetComponentInParent<ChessboardController>().chessboardY;
         //Debug.Log("SIZE: " + chessboardSize);
         spriteRenderer = GetComponent<SpriteRenderer>();
-        if(col >= ChessboardController.instance.pollutedStartCol){
-            isUsingGreenSprite = false;
-        }else{
-            isUsingGreenSprite = true;
-        }
-        spriteRenderer.sprite = isUsingGreenSprite ? greenSprite : pollutedSprite;
+        SetState(col >= ChessboardController.instance.pollutedStartCol);
         draggableAcceptor.canAccept = isUsingGreenSprite;
     }
 
     private void Update()
     {
-        spriteRenderer.sprite = isUsingGreenSprite ? greenSprite : pollutedSprite;
         draggableAcceptor.canAccept = isUsingGreenSprite;
+    }
+
+    public void SetState(bool isPolluted)
+    {
+        if (!isUsingGreenSprite && !isPolluted)
+        {
+            spriteRenderer.sprite = GetGreenSprite();
+            pollution.DOFade(0, 0.4f);
+        }
+        else if (isPolluted)
+        {
+            //spriteRenderer.sprite = pollutedSprite;
+            pollution.DOFade(1, 0.4f);
+        }
+        isUsingGreenSprite = !isPolluted;
+    }
+
+    private Sprite GetGreenSprite()
+    {
+        Random random = new Random();
+        return greenSprites[random.Next(0, greenSprites.Count)];
     }
 
     public void SpreadPollution(int distance)

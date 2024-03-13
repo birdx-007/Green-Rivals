@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class PollutionController : Enemy
 {
-    private void Awake()
+    private new void Awake()
     {
+        base.Awake();
         gameObject.name = "Pollution";
         type = EnemyType.Pollution;
         sourceType = SourceType.None;

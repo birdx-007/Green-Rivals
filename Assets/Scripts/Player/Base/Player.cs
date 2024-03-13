@@ -74,4 +74,11 @@ public abstract class Player : GameObjectRecordedInManageSystem, ICellOccupier
     {
         ManageSystem.instance.DeletePlayer(this);
     }
+
+    public async void OnOutOfField()
+    {
+        GetComponent<SpriteRenderer>().DOColor(new Color(1, 1, 1, 0), 0.4f).SetEase(Ease.InQuad);
+        await transform.DOMoveX(transform.position.x + 1.5f, 0.4f).AsyncWaitForCompletion();
+        Destroy(gameObject);
+    }
 }

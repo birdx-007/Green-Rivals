@@ -46,7 +46,7 @@ public class PlayerDraggable : Draggable
 
     protected override void onMouseUpExtra()
     {
-        base.onMouseDragExtra();
+        base.onMouseUpExtra();
         if (Input.GetMouseButton(0))
         {
             if (targetDraggableAcceptor != null && targetDraggableAcceptor.CanAccept())

@@ -41,11 +41,10 @@ public class Draggable : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (!isDragging && Input.GetMouseButton(0))
+        if (!isDragging)
         {
             offset = transform.position - GetMouseWorldPosition();
             isDragging = true;
-
         }
         else
         {
