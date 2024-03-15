@@ -11,7 +11,7 @@ using UnityEngine.UI;
 
 public class ManageSystem : MonoBehaviour
 {
-    public bool hasGenerate = false;
+    public LevelData currentLevelData;
     public static ManageSystem instance;
     public float playerMoveTime = 0.8f; // 玩家前进一格所需时间
     [NonSerialized]
@@ -52,45 +52,53 @@ public class ManageSystem : MonoBehaviour
 
     private void Start()
     {
-        Initialize(7);
+        Initialize();
     }
 
-    void Initialize(int newEnergy)
+    private async void Initialize()
     {
-        energy = newEnergy;
         steps = 0;
         isProcessing = false;
         foreach (KeyValuePair<int, Player> pair in players)
         {
             Destroy(pair.Value.gameObject);
         }
-
         players.Clear();
         foreach (KeyValuePair<int, Enemy> pair in enemies)
         {
             Destroy(pair.Value.gameObject);
         }
         enemies.Clear();
-    }
-
-    private async void Update()
-    {
-        if (!hasGenerate)
+        if (LevelDatabase.currentLevelData != null)
         {
-            EnemyGenerater.instance.GenerateEnemy(EnemyType.Recyclable, 0, 1, 4);
-            EnemyGenerater.instance.GenerateEnemy(EnemyType.Recyclable, 1, 4, 5);
-            EnemyGenerater.instance.GenerateEnemy(EnemyType.Recyclable, 2, 5, 6);
-            EnemyGenerater.instance.GenerateEnemy(EnemyType.Recyclable, 0, 2, 8);
-            EnemyGenerater.instance.GenerateEnemy(EnemyType.Harmless, 1, 2, 5);
-            EnemyGenerater.instance.GenerateEnemy(EnemyType.Harmless, 0, 4, 8);
-            EnemyGenerater.instance.GenerateEnemy(EnemyType.Radiation, 0, 3, 4);
-            EnemyGenerater.instance.GenerateEnemy(EnemyType.Radiation, 0, 2, 6);
-            EnemyGenerater.instance.GenerateEnemy(EnemyType.Radiation, 0, 3, 5);
-            EnemyGenerater.instance.GenerateEnemy(EnemyType.Radiation, 0, 3, 6);
-            hasGenerate = true;
+            energy = LevelDatabase.currentLevelData.energy;
+            chessboard.chessboardX = LevelDatabase.currentLevelData.chessboardColNum;
+            chessboard.chessboardY = LevelDatabase.currentLevelData.chessboardRowNum;
+            chessboard.InitializeChessboard();
+            foreach (EnemyInfo enemyInfo in LevelDatabase.currentLevelData.enemies)
+            {
+                EnemyGenerater.instance.GenerateEnemy(enemyInfo.type, enemyInfo.varition, enemyInfo.row, enemyInfo.col);
+            }
             await UniTask.NextFrame();
             chessboard.UpdateChessboard();
         }
+        else // 默认
+        {
+            energy = currentLevelData.energy;
+            chessboard.chessboardX = currentLevelData.chessboardColNum;
+            chessboard.chessboardY = currentLevelData.chessboardRowNum;
+            chessboard.InitializeChessboard();
+            foreach (EnemyInfo enemyInfo in currentLevelData.enemies)
+            {
+                EnemyGenerater.instance.GenerateEnemy(enemyInfo.type, enemyInfo.varition, enemyInfo.row, enemyInfo.col);
+            }
+            await UniTask.NextFrame();
+            chessboard.UpdateChessboard();
+        }
+    }
+
+    private void Update()
+    {
         if (Input.GetKeyDown(KeyCode.Space) && !isProcessing)
         {
             StartRound();
@@ -100,7 +108,7 @@ public class ManageSystem : MonoBehaviour
 
     private bool isWinning()
     {
-        if (hasGenerate && (leftEnemies == 0||enemies.Count==0))
+        if ((leftEnemies == 0||enemies.Count==0))
         {
             return true;
         }
@@ -110,7 +118,7 @@ public class ManageSystem : MonoBehaviour
 
     private bool isLosing()
     {
-        if (hasGenerate && (energy == 0 && enemies.Count > 0 && players.Count == 0 || chessboard.colPolluted[0]))
+        if ((energy == 0 && enemies.Count > 0 && players.Count == 0 || chessboard.colPolluted[0]))
         {
             return true;
         }

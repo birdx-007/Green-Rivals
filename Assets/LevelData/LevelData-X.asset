@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d205f2803248c87418635ed4f9a49fbb, type: 3}
+  m_Name: LevelData-X
+  m_EditorClassIdentifier: 
+  energy: 7
+  chessboardColNum: 8
+  chessboardRowNum: 5
+  enemies:
+  - type: 1
+    varition: 0
+    row: 1
+    col: 4
+  - type: 1
+    varition: 1
+    row: 4
+    col: 5
+  - type: 1
+    varition: 2
+    row: 5
+    col: 6
+  - type: 1
+    varition: 0
+    row: 2
+    col: 8
+  - type: 2
+    varition: 1
+    row: 2
+    col: 5
+  - type: 2
+    varition: 0
+    row: 4
+    col: 8
+  - type: 3
+    varition: 0
+    row: 3
+    col: 4
+  - type: 3
+    varition: 0
+    row: 2
+    col: 6
+  - type: 3
+    varition: 0
+    row: 3
+    col: 5
+  - type: 3
+    varition: 0
+    row: 3
+    col: 6

@@ -8470,6 +8470,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1469496877}
     - target: {fileID: 2353190140980614632, guid: 5f4c87249c642cf40adbab46c3d639a5, type: 3}
+      propertyPath: currentLevelData
+      value: 
+      objectReference: {fileID: 11400000, guid: 81baa4bdf169b8349a0f8f7151ec2fd8, type: 2}
+    - target: {fileID: 2353190140980614632, guid: 5f4c87249c642cf40adbab46c3d639a5, type: 3}
       propertyPath: OnGameWin.m_PersistentCalls.m_Calls.Array.size
       value: 3
       objectReference: {fileID: 0}
@@ -10642,11 +10646,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6546872565909849161, guid: 27fccbec16cd6f941b40ba6514fe9106, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7.199951
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6546872565909849161, guid: 27fccbec16cd6f941b40ba6514fe9106, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.75
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6546872565909849161, guid: 27fccbec16cd6f941b40ba6514fe9106, type: 3}
       propertyPath: m_LocalPosition.z

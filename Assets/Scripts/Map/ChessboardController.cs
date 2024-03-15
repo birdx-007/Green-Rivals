@@ -33,19 +33,6 @@ public class ChessboardController : MonoBehaviour
     private float cellY;
     [ReadOnly] public List<bool> colPolluted;
 
-    private void Start()
-    {
-        InitializeChessboard();
-        //CellController cellController = GetCell(3, 7);
-        //int numberOfCellsToPollute = 3; 
-        //cellController.SpreadPollution(numberOfCellsToPollute);
-        colPolluted = new List<bool>(chessboardX);
-        for(int i=1;i<=chessboardX;i++)
-        {
-            colPolluted.Add(false);
-        }
-    }
-
     public void InitializeChessboard()
     {
         cells = new List<List<CellController>>();
@@ -68,12 +55,18 @@ public class ChessboardController : MonoBehaviour
                 cell.row = i + 1;
                 cell.col = j + 1;
                 cells[i].Add(cell);
-                obj.transform.localPosition = new Vector3((0.5f + j) * cell.edgeX, -(0.5f + i) * cell.edgeY, 0);
+                //obj.transform.localPosition = new Vector3((0.5f + j) * cell.edgeX, -(0.5f + i) * cell.edgeY, 0);
+                obj.transform.localPosition = new Vector3((0.5f + j - chessboardX*0.5f) * cell.edgeX, -(0.5f + i - chessboardY * 0.5f) * cell.edgeY, 0);
                 obj.name = "Cell_" + cell.row + "_" + cell.col;
                 SpriteRenderer renderer = cell.GetComponent<SpriteRenderer>();
                 renderer.sortingLayerName = "Map";
                 //renderer.sortingOrder = -i; // 调节project settings的graphics的排序轴为010就不用这句了
             }
+        }
+        colPolluted = new List<bool>(chessboardX);
+        for (int i = 1; i <= chessboardX; i++)
+        {
+            colPolluted.Add(false);
         }
     }
 
@@ -140,7 +133,8 @@ public class ChessboardController : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.black;
-        Gizmos.DrawWireCube(transform.position + new Vector3(0.5f * chessboardX * 1.8f, -0.5f * chessboardY * 1.5f, 0),
-            new Vector3(chessboardX * 1.8f, chessboardY * 1.5f, 0));
+        //Gizmos.DrawWireCube(transform.position + new Vector3(0.5f * chessboardX * 1.8f, -0.5f * chessboardY * 1.5f, 0),
+            //new Vector3(chessboardX * 1.8f, chessboardY * 1.5f, 0));
+        Gizmos.DrawWireCube(transform.position, new Vector3(chessboardX * 1.8f, chessboardY * 1.5f, 0));
     }
 }
