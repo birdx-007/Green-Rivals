@@ -214,6 +214,7 @@ public class ManageSystem : MonoBehaviour
         if (isWinning())
         {
             OnGameWin.Invoke();
+            LevelDatabase.UpdateLatestLevel();
         }
         else if (isLosing())
         {

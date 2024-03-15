@@ -363,6 +363,7 @@ GameObject:
   - component: {fileID: 766362333}
   - component: {fileID: 766362332}
   - component: {fileID: 766362331}
+  - component: {fileID: 766362334}
   m_Layer: 5
   m_Name: 2nd
   m_TagString: Untagged
@@ -434,7 +435,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 766362332}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2147035676}
+        m_TargetAssemblyTypeName: SceneManageSystem, Assembly-CSharp
+        m_MethodName: ChangeScene
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: GameScene
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2061105288}
+        m_TargetAssemblyTypeName: LevelDatabase, Assembly-CSharp
+        m_MethodName: ChooseLevel
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &766362332
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -448,7 +473,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.7058824}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -473,6 +498,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 766362329}
   m_CullTransparentMesh: 1
+--- !u!114 &766362334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 766362329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff06856b3f0730d4aa7187b73e54edc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelNum: 1
 --- !u!1 &954763037
 GameObject:
   m_ObjectHideFlags: 0
@@ -485,6 +523,7 @@ GameObject:
   - component: {fileID: 954763041}
   - component: {fileID: 954763040}
   - component: {fileID: 954763039}
+  - component: {fileID: 954763042}
   m_Layer: 5
   m_Name: 1st
   m_TagString: Untagged
@@ -619,6 +658,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 954763037}
   m_CullTransparentMesh: 1
+--- !u!114 &954763042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 954763037}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff06856b3f0730d4aa7187b73e54edc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelNum: 0
 --- !u!1 &986996981
 GameObject:
   m_ObjectHideFlags: 0
@@ -631,6 +683,7 @@ GameObject:
   - component: {fileID: 986996985}
   - component: {fileID: 986996984}
   - component: {fileID: 986996983}
+  - component: {fileID: 986996986}
   m_Layer: 5
   m_Name: 3rd
   m_TagString: Untagged
@@ -702,7 +755,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 986996984}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2147035676}
+        m_TargetAssemblyTypeName: SceneManageSystem, Assembly-CSharp
+        m_MethodName: ChangeScene
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: GameScene
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2061105288}
+        m_TargetAssemblyTypeName: LevelDatabase, Assembly-CSharp
+        m_MethodName: ChooseLevel
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &986996984
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -716,7 +793,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.7058824}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -741,6 +818,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 986996981}
   m_CullTransparentMesh: 1
+--- !u!114 &986996986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 986996981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff06856b3f0730d4aa7187b73e54edc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelNum: 2
 --- !u!1 &1105030517
 GameObject:
   m_ObjectHideFlags: 0

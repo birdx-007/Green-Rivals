@@ -3,54 +3,31 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.Serialization;
+using DG.Tweening;
 
 public class UIManageSystem : MonoBehaviour
 {
-    public GameObject book;
-    public GameObject end;
-    public GameObject roundStartTip;
-
+    public float UIAnimationTime = 0.25f;
+    public GameObject tutorial;
+    private void Awake()
+    {
+        if(LevelDatabase.currentLevel == 0)
+        {
+            OpenMenu(tutorial);
+        }
+    }
     public void OpenMenu(GameObject menuObject)
     {
+        var scale = menuObject.transform.localScale;
+        menuObject.transform.localScale = Vector3.zero;
         menuObject.SetActive(true);
+        menuObject.transform.DOScale(scale,UIAnimationTime);
     }
-    public void CloseMenu(GameObject menuObject)
+    public async void CloseMenu(GameObject menuObject)
     {
+        var scale = menuObject.transform.localScale;
+        await menuObject.transform.DOScale(0, UIAnimationTime).AsyncWaitForCompletion();
         menuObject.SetActive(false);
+        menuObject.transform.localScale = scale;
     }
-    public void OpenTheEnd()
-    {
-        end.SetActive(true);
-    }
-
-    public void CloseTheEnd()
-    {
-        end.SetActive(false);
-    }
-    public void OpenTheBook()
-    {
-        book.SetActive(true);
-    }
-    public void ExitLastStep()
-    {
-        book.SetActive(false);
-    }
-    public void OpenTip()
-    {
-        roundStartTip.SetActive(true);
-
-    }
-    public void CloseTip()
-    {
-        roundStartTip.SetActive(false);
-    }
-    public void TryAgain()
-    {
-        SceneManager.LoadScene("GameScene", LoadSceneMode.Single);
-    }
-    public void Quit()
-    {
-        SceneManager.LoadScene("LevelScene", LoadSceneMode.Single);
-    }
-
 }
