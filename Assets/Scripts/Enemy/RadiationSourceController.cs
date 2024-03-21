@@ -29,11 +29,13 @@ public class RadiationSourceController : Enemy
     public override void OnStateUpdate()
     {
         base.OnStateUpdate();
+        /*
         GameObject shadow = new GameObject(gameObject.name + " shadow");
         shadow.transform.position = transform.position;
         var shadowSprite = shadow.AddComponent<SpriteRenderer>();
         shadowSprite.sprite = GetComponent<SpriteRenderer>().sprite;
         shadowSprite.DOFade(0, 0.6f);
         shadow.transform.DOScale(3f, 0.6f).OnComplete(() => { Destroy(shadow); });
+        */
     }
 }
